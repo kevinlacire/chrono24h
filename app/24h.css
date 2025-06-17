@@ -1,0 +1,112 @@
+/*.span6 p{
+    margin-top: 45px;
+}
+.span6 p a, .span6 p a:hover{
+    font-size: 110px;
+}*/
+
+/*
+@font-face {
+  font-family: digital7;
+  src: url(./../fonts/7segment.woff);
+}*/
+
+html,body{
+	margin:0;
+	padding:0;
+	height:100%;
+}
+
+.time{
+  width: 100%;
+  position: absolute;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-family: digital7;
+  font-size:1500%;
+  /* font-weight:bold; */
+  /*height:140px;*/
+  text-align:center;
+}
+
+body {
+  line-height: 0.8;
+}
+
+.score{
+  font-family: digital7;
+  font-size: 200px;
+  font-weight: normal;
+  /* height: 150px; */
+  /* margin: 80px 0 -30px; */
+  text-align: center;
+}
+
+.black, .white, .black:hover, .white:hover{
+  text-decoration: none;
+  font-size: 80px;
+  font-weight: 800;
+}
+
+.bk-black{
+  color: black;
+  padding-top: 250px;
+}
+
+.bk-black hr{
+  border: 1px solid black;
+}
+
+#incBlack, #decBlack{
+  color: black;
+}
+
+#incWhite, #decWhite{
+  color: black;
+}
+
+.bk-white{
+  color: black;
+  padding-top: 250px;
+}
+
+#vs{
+  position:absolute;
+  top: calc(30%);
+  left: calc(50% - 50px);
+  width: 100px
+}
+
+.controls{
+  font-size: 100px;
+}
+
+.controls p{
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.admin-controls{
+  position:absolute;
+  bottom:0;
+  right:0;
+}
+
+.center-sponsor {
+  width: 19%
+}
+
+* {
+  border-radius: 0 !important;
+}
+
+.fill { 
+  min-height: 100%;
+  height: 100%;
+}
+
+.diagonal-split-background{
+  background-color: #fffb00;
+  background-image: -webkit-linear-gradient(-10deg, #f6ff00 50%, #0088ff 50%);
+}

@@ -1,18 +1,22 @@
-import type { Metadata } from 'next';
+import './bootstrap.min.css'
+import './24h.css'
+import { Inter } from 'next/font/google'
 
-export const metadata: Metadata = {
-  title: 'Next.js on GitHub Pages',
-  description: 'Deploy your static Next.js site to GitHub Pages.',
-};
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata = {
+  title: 'Chrono 24h Basket ' + new Date().getFullYear(),
+  description: 'Chrono 24h Basket',
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={inter.className}>{children}</body>
     </html>
-  );
+  )
 }
