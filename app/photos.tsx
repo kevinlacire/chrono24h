@@ -1,6 +1,7 @@
 const unsplashLink = (id: string) => `/chrono24h/sponsors/${id}`;
 
 const unsplashPhotos = [
+  { id: "ads.jpg", width: 100, height: 100 },
   { id: "acp-immo.png", width: 100, height: 100 },
   { id: "art-line.png", width: 100, height: 100 },
   { id: "beaugendre.png", width: 100, height: 100 },

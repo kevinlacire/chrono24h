@@ -144,6 +144,8 @@ export default function Scoreboard() {
               <FunnyEvent classes={'btn btn-light'} value={'🔥 on fire'} onClick={() => playSong('on-fire')} />
               <FunnyEvent classes={'btn btn-light'} value={'too easy'} onClick={() => playSong('too-easy')} />
               <FunnyEvent classes={'btn btn-light'} value={'🫨 wild shot'} onClick={() => playSong('wild-shot')} />
+              <FunnyEvent classes={'btn btn-light'} value={'🎉 tada'} onClick={() => playSong('tada')} />
+              <FunnyEvent classes={'btn btn-light'} value={'🌬️ pet'} onClick={() => playSong('fart')} />
 
               <MuteUnmute classes={'btn btn-light'} value="🔇 mute/unmute" onClick={toggleSound} />
             </div>

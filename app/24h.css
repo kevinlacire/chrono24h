@@ -107,6 +107,6 @@ body {
 }
 
 .diagonal-split-background{
-  background-color: #fffb00;
-  background-image: -webkit-linear-gradient(-10deg, #f6ff00 50%, #0088ff 50%);
+  background-color: #f4dae3;
+  background-image: -webkit-linear-gradient(-10deg, #f4dae3 50%, #c2e2dd 50%);
 }
