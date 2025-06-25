@@ -1,11 +1,12 @@
 "use client";
 import { useRef, useState } from 'react'
-import {Howl, Howler} from 'howler';
+import { Howl, Howler } from 'howler';
 import Countdown from 'react-countdown';
 import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
 import PhotoAlbum from "react-photo-album";
 import photos from "./photos";
+import useExitPrompt from "./useExitPrompt.js";
 
 type ScoreProps = {
   value: number;
@@ -44,21 +45,22 @@ export default function Scoreboard() {
   const [scoreRed, setScoreRed] = useState(0);
   const officialEndDatetime = Date.UTC(2025, 5, 27, 17, 0, 0); // (months 0 based)
   //const officialEndDatetime = Date.now() + 3000;
-  
+  const [showExitPrompt, setShowExitPrompt] = useExitPrompt(true);
+
   const [isMuted, setIsMuted] = useState(false);
   const [soundIsPlaying, setSoundIsPlaying] = useState(false);
-  
+
   const ref = useRef<FireworksHandlers>(null)
 
   function fireworks() {
-    if (!ref.current) return;    
+    if (!ref.current) return;
     if (ref.current.isRunning) {
       ref.current.stop();
-    } else {      
+    } else {
       ref.current.updateSize({
         height: window.outerHeight,
         width: window.outerWidth
-       });
+      });
       ref.current.start();
     }
   }
@@ -71,7 +73,7 @@ export default function Scoreboard() {
     setIsMuted(!isMuted);
     if (!isMuted) {
       Howler.volume(0);
-    } else { 
+    } else {
       Howler.volume(1);
     }
   }
@@ -80,9 +82,9 @@ export default function Scoreboard() {
     return Math.floor(Math.random() * max) + 1;
   }
 
-  function playSong(song: string, random: boolean = false) {    
+  function playSong(song: string, random: boolean = false) {
     if (random) {
-      song+='-'+getRandomInt(2)
+      song += '-' + getRandomInt(2)
     }
     console.log(song + '.mp3');
     var sound = new Howl({
@@ -90,10 +92,14 @@ export default function Scoreboard() {
       html5: true
     });
 
-    if (!soundIsPlaying && !isMuted) {
+    if (!isMuted) {
+      if (soundIsPlaying) {
+        Howler.stop();
+        setSoundIsPlaying(false);
+      }
       sound.play();
       setSoundIsPlaying(true);
-      sound.on('end', function(){
+      sound.on('end', function () {
         setSoundIsPlaying(false);
       });
     }
@@ -104,18 +110,18 @@ export default function Scoreboard() {
       <div className="container-fluid h-100 diagonal-split-background">
         <div className="row time">
           <Countdown date={officialEndDatetime} daysInHours={true} onComplete={fireworks} />
-        </div>        
+        </div>
         <div className="row h-100">
           <div className="col bk-black">
             <Score value={scoreBlue} />
             <div className="row controls">
               <div className="btn-group" role="group">
-                <AddPoints classes={'btn btn-outline-success'} inc={+2} onClick={() => { incScore(2, scoreBlue, setScoreBlue) } } />
-                <AddPoints classes={'btn btn-outline-success'} inc={+3} onClick={() => { incScore(3, scoreBlue, setScoreBlue) } } />
+                <AddPoints classes={'btn btn-outline-success'} inc={+2} onClick={() => { incScore(2, scoreBlue, setScoreBlue) }} />
+                <AddPoints classes={'btn btn-outline-success'} inc={+3} onClick={() => { incScore(3, scoreBlue, setScoreBlue) }} />
               </div>
               <div className="btn-group" role="group">
-                <AddPoints classes={'btn btn-outline-danger'} inc={-2} onClick={() => { incScore(-2, scoreBlue, setScoreBlue) } } />
-                <AddPoints classes={'btn btn-outline-danger'} inc={-3} onClick={() => { incScore(-3, scoreBlue, setScoreBlue) } } />
+                <AddPoints classes={'btn btn-outline-danger'} inc={-2} onClick={() => { incScore(-2, scoreBlue, setScoreBlue) }} />
+                <AddPoints classes={'btn btn-outline-danger'} inc={-3} onClick={() => { incScore(-3, scoreBlue, setScoreBlue) }} />
               </div>
             </div>
           </div>
@@ -123,12 +129,12 @@ export default function Scoreboard() {
             <Score value={scoreRed} />
             <div className="row controls">
               <div className="btn-group" role="group">
-                <AddPoints classes={'btn btn-outline-success'} inc={+2} onClick={() => { incScore(2, scoreRed, setScoreRed) } } />
-                <AddPoints classes={'btn btn-outline-success'} inc={+3} onClick={() => { incScore(3, scoreRed, setScoreRed) } } />
+                <AddPoints classes={'btn btn-outline-success'} inc={+2} onClick={() => { incScore(2, scoreRed, setScoreRed) }} />
+                <AddPoints classes={'btn btn-outline-success'} inc={+3} onClick={() => { incScore(3, scoreRed, setScoreRed) }} />
               </div>
               <div className="btn-group" role="group">
-                <AddPoints classes={'btn btn-outline-danger'} inc={-2} onClick={() => { incScore(-2, scoreRed, setScoreRed) } } />
-                <AddPoints classes={'btn btn-outline-danger'} inc={-3} onClick={() => { incScore(-3, scoreRed, setScoreRed) } } />
+                <AddPoints classes={'btn btn-outline-danger'} inc={-2} onClick={() => { incScore(-2, scoreRed, setScoreRed) }} />
+                <AddPoints classes={'btn btn-outline-danger'} inc={-3} onClick={() => { incScore(-3, scoreRed, setScoreRed) }} />
               </div>
             </div>
           </div>
@@ -150,7 +156,7 @@ export default function Scoreboard() {
               <MuteUnmute classes={'btn btn-light'} value="🔇 mute/unmute" onClick={toggleSound} />
             </div>
           </div>
-        </div>        
+        </div>
       </div>
       <Fireworks
         ref={ref}
