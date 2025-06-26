@@ -11,7 +11,7 @@ const unsplashPhotos = [
   { id: "brittany-classic-cars.png", width: 100, height: 100 },
   { id: "burger-king.png", width: 100, height: 100 },
   { id: "castel-auto.png", width: 100, height: 100 },
-  { id: "charact-hair.png", width: 100, height: 100 },  
+  { id: "charact-hair.png", width: 100, height: 100 },
   { id: "cimm.png", width: 100, height: 100 },
   { id: "comite-35.jpg", width: 100, height: 100 },
   { id: "collet.png", width: 100, height: 100 },
