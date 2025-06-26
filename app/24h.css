@@ -5,11 +5,11 @@
     font-size: 110px;
 }*/
 
-/*
+
 @font-face {
   font-family: digital7;
-  src: url(./../fonts/7segment.woff);
-}*/
+  src: local("digital7"), url("/chrono24h/fonts/digital-7-mono-italic.ttf") format("truetype");
+}
 
 html,body{
 	margin:0;
