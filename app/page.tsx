@@ -153,14 +153,12 @@ export default function Scoreboard() {
             <MuteUnmute classes={'btn btn-light'} value="🔇 mute/unmute" onClick={toggleSound} />
           </div>
         </div>
-        <div className="row fixed bottom-0 left-0 w-full bg-gray-800 text-white p-4">
+        <div className="row fixed bottom-0 left-0 w-full bg-gray-800 text-white">
           <div className="col">
             <div className="row controls">
               <div className="btn-group" role="group">
                 <AddPoints classes={'btn btn-outline-success'} inc={+2} onClick={() => { incScore(2, scoreBlue, setScoreBlue) }} />
                 <AddPoints classes={'btn btn-outline-success'} inc={+3} onClick={() => { incScore(3, scoreBlue, setScoreBlue) }} />
-              </div>
-              <div className="btn-group" role="group">
                 <AddPoints classes={'btn btn-outline-danger'} inc={-2} onClick={() => { incScore(-2, scoreBlue, setScoreBlue) }} />
                 <AddPoints classes={'btn btn-outline-danger'} inc={-3} onClick={() => { incScore(-3, scoreBlue, setScoreBlue) }} />
               </div>
@@ -171,8 +169,6 @@ export default function Scoreboard() {
               <div className="btn-group" role="group">
                 <AddPoints classes={'btn btn-outline-success'} inc={+2} onClick={() => { incScore(2, scoreRed, setScoreRed) }} />
                 <AddPoints classes={'btn btn-outline-success'} inc={+3} onClick={() => { incScore(3, scoreRed, setScoreRed) }} />
-              </div>
-              <div className="btn-group" role="group">
                 <AddPoints classes={'btn btn-outline-danger'} inc={-2} onClick={() => { incScore(-2, scoreRed, setScoreRed) }} />
                 <AddPoints classes={'btn btn-outline-danger'} inc={-3} onClick={() => { incScore(-3, scoreRed, setScoreRed) }} />
               </div>
