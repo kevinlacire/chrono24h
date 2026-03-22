@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Howl, Howler } from 'howler';
 import Countdown, { CountdownTimeDelta } from 'react-countdown';
 import { Fireworks } from '@fireworks-js/react'
@@ -52,6 +52,8 @@ const TributeImage: React.FC<CommonProps & StyleProps> = ({ classes, value, onCl
 export default function Scoreboard() {
   const [scoreBlue, setScoreBlue] = useState(0);
   const [scoreRed, setScoreRed] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
   const officialEndDatetime = Date.UTC(2025, 5, 28, 17, 0, 0); // (months 0 based)
   //const officialEndDatetime = Date.now() + 5000;
   const [showExitPrompt, setShowExitPrompt] = useExitPrompt(true);
@@ -61,6 +63,37 @@ export default function Scoreboard() {
   const [soundIsPlaying, setSoundIsPlaying] = useState(false);
 
   const ref = useRef<FireworksHandlers>(null)
+
+  // Écouter les changements de taille de la fenêtre
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Calculer la hauteur des photos en fonction de la largeur
+  const photoRowHeight = windowWidth < 480 ? 80 : windowWidth < 768 ? 100 : 120;
+
+  // Charger les scores au montage du composant
+  useEffect(() => {
+    const savedScoreBlue = localStorage.getItem('scoreBlue');
+    const savedScoreRed = localStorage.getItem('scoreRed');
+    console.log('Loading from localStorage:', { scoreBlue: savedScoreBlue, scoreRed: savedScoreRed });
+    if (savedScoreBlue !== null) setScoreBlue(Number(savedScoreBlue));
+    if (savedScoreRed !== null) setScoreRed(Number(savedScoreRed));
+    setIsLoaded(true);
+  }, []);
+
+  // Sauvegarder les scores dans localStorage à chaque changement
+  useEffect(() => {
+    if (isLoaded) {
+      console.log('Saving to localStorage:', { scoreBlue, scoreRed });
+      localStorage.setItem('scoreBlue', scoreBlue.toString());
+      localStorage.setItem('scoreRed', scoreRed.toString());
+    }
+  }, [scoreBlue, scoreRed, isLoaded]);
 
   function onTick(countdownTimeDelta: CountdownTimeDelta) {
     if (countdownTimeDelta.days === 0 && countdownTimeDelta.hours === 0 && countdownTimeDelta.minutes <= 2 && countdownTimeDelta.seconds <= 2) {
@@ -120,13 +153,20 @@ export default function Scoreboard() {
     }
   }
 
+  function resetScores() {
+    setScoreBlue(0);
+    setScoreRed(0);
+    localStorage.removeItem('scoreBlue');
+    localStorage.removeItem('scoreRed');
+  }
+
   return (
     <>
       <div className="container-fluid h-100 diagonal-split-background">
         <div className="row time">
           <Countdown date={officialEndDatetime} daysInHours={true} onComplete={fireworks} onTick={(e => onTick(e))} />
         </div>
-        <div className="row">
+        <div className="row" id="score">
           <div className="col bk-black">
             <Score value={scoreBlue} />
           </div>
@@ -135,9 +175,9 @@ export default function Scoreboard() {
           </div>
         </div>
         <div className="row">
-          <PhotoAlbum layout="rows" photos={photos} spacing={5} targetRowHeight={150} />
+          <PhotoAlbum layout="rows" photos={photos} spacing={3} targetRowHeight={photoRowHeight} />
         </div>
-        <div className="row controls">
+        <div className="row controls fixed bottom-10 left-0 w-full">
           <div className="btn-group" role="group">
             <FunnyEvent classes={'btn btn-light'} value={'🙈 airball'} onClick={() => playSong('airball')} />
             <FunnyEvent classes={'btn btn-light'} value={"🇺🇸 l'américain"} onClick={() => playSong('usa', true)} />
@@ -147,13 +187,12 @@ export default function Scoreboard() {
             <FunnyEvent classes={'btn btn-light'} value={'too easy'} onClick={() => playSong('too-easy')} />
             <FunnyEvent classes={'btn btn-light'} value={'🫨 wild shot'} onClick={() => playSong('wild-shot')} />
             <FunnyEvent classes={'btn btn-light'} value={'🎉 tada'} onClick={() => playSong('tada')} />
-            <FunnyEvent classes={'btn btn-light'} value={'🌬️ pet'} onClick={() => playSong('fart')} />
             <FunnyEvent classes={'btn btn-light'} value={'📯 horn'} onClick={() => playSong('horn')} />
 
             <MuteUnmute classes={'btn btn-light'} value="🔇 mute/unmute" onClick={toggleSound} />
           </div>
         </div>
-        <div className="row fixed bottom-0 left-0 w-full bg-gray-800 text-white">
+        <div className="row bg-gray-800 text-white fixed bottom-0 left-0 w-full">
           <div className="col">
             <div className="row controls">
               <div className="btn-group" role="group">
@@ -175,6 +214,9 @@ export default function Scoreboard() {
             </div>
           </div>
         </div>
+        {/* <div className="row">
+          <button onClick={resetScores}>🔄 Reset</button>
+        </div> */}
       </div>
     </>
   );

@@ -8,49 +8,85 @@
 
 @font-face {
   font-family: digital7;
-  src: local("digital7"), url("/chrono24h/fonts/digital-7-mono-italic.ttf") format("truetype");
+  src: local("digital7"), url("/fonts/digital-7-mono-italic.ttf") format("truetype");
 }
 
 html,body{
 	margin:0;
 	padding:0;
-	height:100%;
-}
-
-.time{
-  width: 100%;
-  position: absolute;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  font-family: digital7;
-  font-size:1500%;
-  /* font-weight:bold; */
-  /*height:140px;*/
-  text-align:center;
+	height:100vh;
+	overflow: hidden;
 }
 
 body {
   line-height: 0.8;
 }
 
+.diagonal-split-background {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.diagonal-split-background > .row {
+  flex-shrink: 0;
+}
+
+.diagonal-split-background > .row:nth-child(2) {
+  flex: 0 0 clamp(120px, 35vh, 280px);
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.diagonal-split-background > .row:nth-child(3) {
+  flex: 0 1 auto;
+  overflow: auto;
+  max-height: 100vh;
+}
+
+.diagonal-split-background > .row:nth-child(4) {
+  flex-shrink: 0;
+}
+
+.time{
+  width: 100%;
+  padding-top: clamp(8px, 2vh, 15px);
+  padding-bottom: clamp(8px, 2vh, 15px);
+  font-family: digital7;
+  font-size: clamp(3rem, 14vw, 150px);
+  text-align:center;
+}
+
 .score{
   font-family: digital7;
-  font-size: 200px;
+  font-size: clamp(5rem, 22vw, 280px);
   font-weight: normal;
-  /* height: 150px; */
-  /* margin: 80px 0 -30px; */
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0.2;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .black, .white, .black:hover, .white:hover{
   text-decoration: none;
-  font-size: 80px;
+  font-size: clamp(1.2rem, 8vw, 60px);
   font-weight: 800;
 }
 
-.bk-black{
+.bk-black, .bk-white {
   color: black;
-  padding-top: 250px;
+  padding-top: 0;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .bk-black hr{
@@ -65,11 +101,6 @@ body {
   color: black;
 }
 
-.bk-white{
-  color: black;
-  padding-top: 250px;
-}
-
 #vs{
   position:absolute;
   top: calc(30%);
@@ -78,23 +109,61 @@ body {
 }
 
 .controls{
-  font-size: 100px;
+  font-size: clamp(0.5rem, 3vw, 28px);
+  padding: clamp(4px, 0.5vh, 6px) 2px;
+  overflow: visible;
+  position: relative;
+  z-index: 10;
+  margin-bottom: clamp(45px, 9vh, 65px);
 }
 
 .controls p{
   margin-top: 0;
-  margin-bottom: 20px;
+  margin-bottom: clamp(2px, 0.5vh, 4px);
   text-align: center;
 }
 
+.controls .btn-group {
+  flex-wrap: nowrap;
+  gap: 0.02rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow: visible;
+}
+
+.controls .btn {
+  padding: 1px clamp(1px, 0.5vw, 3px) !important;
+  font-size: clamp(0.4rem, 2vw, 16px);
+  flex-shrink: 0;
+  white-space: nowrap;
+  line-height: 1;
+}
+
 .admin-controls{
-  position:absolute;
+  position:fixed;
   bottom:0;
   right:0;
+  width: 100%;
+  background: rgba(255,255,255,0.95);
+  padding: clamp(6px, 1vh, 10px);
+  max-height: calc(100vh - 80vh);
+  overflow-y: auto;
+}
+
+.diagonal-split-background { position: relative; }
+
+.row.fixed.bottom-0 {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  z-index: 100;
 }
 
 .center-sponsor {
-  width: 19%
+  width: 19%;
+  max-height: clamp(40px, 8vh, 100px);
 }
 
 * {
@@ -109,4 +178,46 @@ body {
 .diagonal-split-background{
   background-color: #f4dae3;
   background-image: -webkit-linear-gradient(-10deg, #f4dae3 50%, #c2e2dd 50%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .bk-black,
+  .bk-white {
+    padding-top: clamp(15px, 3vh, 40px);
+    padding-bottom: clamp(15px, 3vh, 40px);
+  }
+
+  .diagonal-split-background > .row:nth-child(3) {
+    max-height: 25vh;
+  }
+
+  .controls {
+    font-size: clamp(0.8rem, 5vw, 50px);
+  }
+}
+
+@media (max-width: 480px) {
+  .diagonal-split-background > .row:nth-child(3) {
+    max-height: 20vh;
+  }
+
+  .bk-black,
+  .bk-white {
+    padding-top: clamp(10px, 2vh, 30px);
+    padding-bottom: clamp(10px, 2vh, 30px);
+  }
+
+  .controls .btn {
+    padding: 2px 4px !important;
+    font-size: 0.75rem;
+  }
+
+  .controls .btn-group {
+    gap: 0.125rem;
+  }
+
+  .center-sponsor {
+    width: 25%;
+  }
 }

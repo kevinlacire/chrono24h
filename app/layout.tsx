@@ -7,6 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'Chrono 24h Basket ' + new Date().getFullYear(),
   description: 'Chrono 24h Basket',
+  viewport: 'width=device-width, initial-scale=1.0',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

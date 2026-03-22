@@ -1,4 +1,4 @@
-const unsplashLink = (id: string) => `/chrono24h/sponsors/${id}`;
+const unsplashLink = (id: string) => `/sponsors/${id}`;
 
 const unsplashPhotos = [
   { id: "ads.jpg", width: 100, height: 100 },
