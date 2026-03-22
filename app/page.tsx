@@ -54,7 +54,7 @@ export default function Scoreboard() {
   const [scoreRed, setScoreRed] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
-  const officialEndDatetime = Date.UTC(2025, 5, 28, 17, 0, 0); // (months 0 based)
+  const officialEndDatetime = Date.UTC(2026, 4, 30, 17, 0, 0); // (months 0 based)
   //const officialEndDatetime = Date.now() + 5000;
   const [showExitPrompt, setShowExitPrompt] = useExitPrompt(true);
   const [showImage, setShowImage] = useState(false);
